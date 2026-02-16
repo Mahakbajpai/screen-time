@@ -24,7 +24,7 @@ The app tracks daily app usage and provides:
 
 ## Screenshots
 ![Daily](screenshots/daily.png)
-*Weekly chart*
+![Weekly](screenshots/weekly.png)
 ![Monthly](screenshots/monthly.png)
 
 ---
