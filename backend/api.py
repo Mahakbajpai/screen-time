@@ -6,8 +6,6 @@ from backend.database import get_weekly_usage, get_monthly_usage
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pathlib import Path
-from datetime import datetime, timedelta
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DIST_DIR = BASE_DIR / "frontend" / "dist"   
@@ -47,20 +45,7 @@ def get_stats():
 @app.get("/api/weekly")
 def weekly_stats():
     raw_weekly = get_weekly_usage()
-
-    today = datetime.today()
-    last_7_days = [
-        (today - timedelta(days=i)).strftime("%Y-%m-%d")
-        for i in range(6, -1, -1)
-    ]
-
-    result = {}
-
-    for day in last_7_days:
-        apps = raw_weekly.get(day, {})
-        result[day] = format_with_threshold(apps, threshold=60)
-
-    return result
+    return {day: format_with_threshold(apps, threshold=60) for day, apps in raw_weekly.items()}
 
 @app.get("/api/monthly")
 def monthly_stats():
